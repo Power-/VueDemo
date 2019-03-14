@@ -5,7 +5,12 @@
     </a>
   </div>-->
   <div class="xd-nav nav-type-1">
-    <a v-for="item in items" :key="item.id" :class="[commonClass, item.active?activeClass : '']">
+    <a
+      v-for="(item, index) in items"
+      :key="item.id"
+      :class="[commonClass, item.active?activeClass : '']"
+      @click="navClick(items, index)"
+    >
       <span class="nav-txt">{{item.text}}</span>
     </a>
   </div>
@@ -28,6 +33,15 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    navClick: function(items, index) {
+      items.forEach(element => {
+        element.active = false;
+      });
+      items[index].active = true;
+      this.$emit("navClick", items, index);
+    }
   }
 };
 </script>
@@ -48,21 +62,21 @@ export default {
   overflow: hidden;
 }
 .xd-nav .nav-item .nav-txt {
-  display: block;
+  display: inline-block;
   position: relative;
   height: 100%;
+  width: 50%;
 }
 .xd-nav .nav-item .nav-txt:after {
   content: "";
   display: block;
-  position: relative;
   height: 4px;
   background-color: #ffcd00;
   opacity: 0;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -75,21 +89,5 @@ export default {
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
   opacity: 1;
-}
-/*active态下方不铺满*/
-.xd-nav.nav-type-2 .nav-item .nav-txt {
-  display: inline-block;
-  padding: 0 5px;
-}
-
-/*居中*/
-.xd-nav.nav-type-3 {
-  display: block;
-}
-.xd-nav.nav-type-3 .nav-item {
-  -webkit-flex: inherit;
-  flex: inherit;
-  display: inline-block;
-  width: 110px;
 }
 </style>

@@ -11,7 +11,7 @@
 export default {
   props: {
     msg: {
-      default: "下载！"
+      default: "自身默认下载！"
     }
   },
   methods: {
